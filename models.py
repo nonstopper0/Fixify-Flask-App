@@ -1,6 +1,6 @@
-# import datetime
-# from peewee import *
-# from flask_login import UserMixin
+import datetime
+from peewee import *
+from flask_login import UserMixin
 
 DATABASE = PostgresqlDatabase('fixify_app')
 
