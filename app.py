@@ -1,6 +1,7 @@
-from flask import Flask, jsonify, g
+from flask import Flask, jsonify, g, request
 from flask_login import LoginManager
 from flask_cors import CORS
+from flask_login import login_user, current_user, logout_user
 app = Flask(__name__)
 app.secret_key = 'thisisasecretkey'
 login_manager = LoginManager()
@@ -33,10 +34,11 @@ from resources.problem import problem
 CORS(mechanic, origin=['http://localhost:3000'], supports_credentials=True)
 CORS(user, origin=['http://localhost:3000'], supports_credentials=True)
 CORS(problem, origin=['http://localhost:3000'], supports_credentials=True)
+CORS(app, supports_credentials=True)
 
-app.register_blueprint(mechanic, url_prefix='/api/v1/mechanic')
-app.register_blueprint(user, url_prefix='/api/v1/user')
-app.register_blueprint(mechanic, url_prefix='/api/v1/problem')
+app.register_blueprint(mechanic, url_prefix='/mechanic')
+app.register_blueprint(user, url_prefix='/user')
+app.register_blueprint(mechanic, url_prefix='/problem')
 
 
 @app.before_request
@@ -53,6 +55,35 @@ def after_request(response):
 @app.route('/')
 def index():
     return 'hi'
+
+@app.route('/login', methods=['POST']) 
+def login():
+    return "hi"
+
+@app.route('/register', methods=['POST'])
+def register():
+    payload = request.get_json()
+    try:
+        if payload['type'] == 'user':
+            print('user register')
+            del payload['type']
+            print(payload)
+            user = models.User.create(**payload)
+            login_user(user)
+            user_dict = model_to_dict(user)
+            del user_dict['password']
+            return jsonify(data = user_dict, status = {"code": 200, "message": "Successfully created an Account"})
+        elif payload['type'] == 'mechanic':
+            print('mechanic register')
+            mechanic = models.Mechanic.create(**payload)
+            login_user(mechanic)
+            mechanic_dict = model_to_dict(mechanic)
+            del mechanic_dict['password']
+            return jsonify(data = mechanic_dict, status = {"code": 200, "message": "Successfully created an Account"})
+    
+    except:
+        return jsonify(data={}, status={"code": 400, "message": "Error creating the resources"})
+
 
 
 DEBUG = True

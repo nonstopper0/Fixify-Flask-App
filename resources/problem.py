@@ -4,6 +4,6 @@ from flask_login import current_user, login_required
 
 import models
 
-
-
+problem = Blueprint('problem', 'problem')
+=======
 problem = Blueprint('problem', 'problem')
