@@ -63,26 +63,28 @@ def login():
 @app.route('/register', methods=['POST'])
 def register():
     payload = request.get_json()
-    try:
-        if payload['type'] == 'user':
-            print('user register')
-            print(payload)
+    if payload['type'] == 'user':
+        try:
+            models.User.get(models.User.email == payload['email'] or models.User.username == payload['username'])
+            return jsonify(data={}, status={"code": 400, "message": "Sorry, you cannot create a user with this email or username"})
+
+        except models.DoesNotExist: 
+            print('user register route')
             del payload['type']
-            user = models.User.create(**payload)
-            login_user(user)
-            user_dict = model_to_dict(user)
-            del user_dict['password']
-            return jsonify(data = user_dict, status = {"code": 200, "message": "Successfully created an Account"})
-        elif payload['type'] == 'mechanic':
-            print('mechanic register')
-            mechanic = models.Mechanic.create(**payload)
-            login_user(mechanic)
-            mechanic_dict = model_to_dict(mechanic)
-            del mechanic_dict['password']
-            return jsonify(data = mechanic_dict, status = {"code": 200, "message": "Successfully created an Account"})
-    
-    except:
-        return jsonify(data={}, status={"code": 400, "message": "Error creating the resources"})
+            print(payload)
+            user = models.User.create(**payload)                
+            return jsonify(data = {}, status = {"code": 200, "message": "Successfully created an Account"})
+    elif payload['type'] == 'mechanic':
+        try:
+            models.Mechanic.get(models.Mechanic.email == payload['email'] or models.Mechanic.username == payload['username'])
+            return jsonify(data={}, status={"code": 400, "message": "Sorry, you cannot create a user with this email or username"})
+
+        except models.DoesNotExist: 
+            print('user register route')
+            del payload['type']
+            print(payload)
+            user = models.Mechanic.create(**payload)                
+            return jsonify(data = {}, status = {"code": 200, "message": "Successfully created an Account"})
 
 
 
