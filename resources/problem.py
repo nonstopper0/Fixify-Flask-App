@@ -61,4 +61,4 @@ def delete_problem(id):
         query.execute()
         return jsonify(data = "Problem succesfully deleted", status={"code": 200, "message": "Problem successfully deleted"})
     except models.DoesNotExist:
-        retrun jsonify(data = {}, status={"code": 400, "message": "Failed to delete"})
+        return jsonify(data = {}, status={"code": 400, "message": "Failed to delete"})
