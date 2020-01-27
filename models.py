@@ -2,16 +2,14 @@
 import datetime
 from peewee import *
 from flask_login import UserMixin
-from playhouse.postgres_ext import *
 
-DATABASE = PostgresqlExtDatabase('fixify_app')
+DATABASE = PostgresqlDatabase('fixify_app')
 
 class Mechanic(UserMixin, Model):
     username = CharField(unique = True)
     email = CharField(unique = True)
     password = CharField()
     location = CharField()
-    specialities = ArrayField(CharField)
 
     class Meta:
         database = DATABASE
@@ -21,7 +19,6 @@ class User(Model):
     email = CharField(unique = True)
     password = CharField()
     location = CharField()
-    cars = ArrayField(CharField)
 
     class Meta:
         database = DATABASE
