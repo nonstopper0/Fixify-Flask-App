@@ -71,7 +71,7 @@ def register():
             print(payload)
             user = models.User.create(**payload) 
             # the status code is what calls the loginfunc on react                
-            return jsonify(data = {}, status = {"code": 200, "message": "Successfully created an Account"})
+            return jsonify(data = {}, status = {'code': 200, 'message': "Successfully Registered", 'id': idOfUser})
     elif payload['type'] == 'mechanic':
         try:
             models.Mechanic.get(models.Mechanic.email == payload['email'] or models.Mechanic.username == payload['username'])
@@ -83,7 +83,7 @@ def register():
             print(payload)
             user = models.Mechanic.create(**payload)  
             # the status code is what calls the loginfunc on react               
-            return jsonify(data = {}, status = {"code": 200, "message": "Successfully created an Account"})
+            return jsonify(data = {}, status = {'code': 200, 'message': "Successfully Registered", 'id': idOfUser})
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -94,8 +94,9 @@ def login():
             userdict = model_to_dict(user)
             if(userdict['password'] == payload['password']):
                 del userdict['password']
+                idOfUser = userdict['id']
                 # the status code is what calls the loginfunc on react 
-                return jsonify(data = {}, status = {'code': 200, 'message': "Successfully logged in"})
+                return jsonify(data = {}, status = {'code': 200, 'message': "Successfully logged in", 'id': idOfUser})
         
             else:
                 return jsonify(data={}, status = {'code': 400, 'message': 'Email or password is incorrect'})
@@ -108,7 +109,7 @@ def login():
             if(mechanicdict['password'] == payload['password']):
                 del mechanicdict['password']
                 # the status code is what calls the loginfunc on react 
-                return jsonify(data = {}, status = {'code': 200, 'message': "Successfully logged in"})
+                return jsonify(data = {}, status = {'code': 200, 'message': "Successfully logged in", 'id': idOfUser})
             else:
                 return jsonify(data={}, status = {'code': 400, 'message': 'Email or password is incorrect'})
         except models.DoesNotExist:
