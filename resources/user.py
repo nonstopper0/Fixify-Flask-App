@@ -4,4 +4,4 @@ from flask_login import current_user, login_required
 
 import models
 
-mechanic = Blueprint('user', 'user')
+user = Blueprint('user', 'user')
