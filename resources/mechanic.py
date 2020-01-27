@@ -20,21 +20,21 @@ def get_all_mechanic():
         return jsonify(data={}, status={"code": 400, "message": "Error getting the resources"})
 
 # Create route
-@mechanic.route('/', methods=["POST"])
+# @mechanic.route('/', methods=["POST"])
 # @login_required
-def create_mechanic():
-    try:
-        payload = request.get_json()
-        print(payload)
-        # payload['owner'] = current_user.id
-        mechanic = models.Mechanic.create(**payload)
-        print(mechanic.__dict__)
-        # print(dir(mechanic))
-        mechanic_dict = model_to_dict(mechanic)
+# def create_mechanic():
+#     try:
+#         payload = request.get_json()
+#         print(payload)
+#         # payload['owner'] = current_user.id
+#         mechanic = models.Mechanic.create(**payload)
+#         print(mechanic.__dict__)
+#         # print(dir(mechanic))
+#         mechanic_dict = model_to_dict(mechanic)
 
-        return jsonify(data = mechanic_dict, status = {"code": 200, "message": "Success"})
-    except models.DoesNotExist:
-        return jsonify(data={}, status={"code": 400, "message": "Error creating the resources"})
+#         return jsonify(data = mechanic_dict, status = {"code": 200, "message": "Success"})
+#     except models.DoesNotExist:
+#         return jsonify(data={}, status={"code": 400, "message": "Error creating the resources"})
 
 # Show route
 @mechanic.route('/<id>', methods=["GET"])

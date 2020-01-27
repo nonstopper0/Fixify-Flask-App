@@ -86,8 +86,6 @@ def register():
             user = models.Mechanic.create(**payload)                
             return jsonify(data = {}, status = {"code": 200, "message": "Successfully created an Account"})
 
-
-
 DEBUG = True
 PORT = 8000
 if __name__ == '__main__':
