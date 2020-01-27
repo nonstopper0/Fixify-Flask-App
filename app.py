@@ -1,14 +1,15 @@
-# from flask import Flask, jsonify, g
-# from flask_login import LoginManager
-# from flask_cors import CORS
-# app = Flask(__name__)
-# app.secret_key = 'thisisasecretkey'
-# login_manager = LoginManager()
-# login_manager.init_app(app)
+from flask import Flask, jsonify, g
+from flask_login import LoginManager
+from flask_cors import CORS
+app = Flask(__name__)
+app.secret_key = 'thisisasecretkey'
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 import models
-from resources.dogs import dogs
-from resources.users import users
+from resources.mechanic import mechanic
+from resources.user import user
+from resources.problem import problem
 
 @login_manager.user_loader
 def load_user(userid):
@@ -29,12 +30,13 @@ def unauthorized():
         }
     )
 
-CORS(dogs, origin=['http://localhost:3000'], supports_credentials=True)
-CORS(users, origin=['http://localhost:3000'], supports_credentials=True)
+CORS(mechanic, origin=['http://localhost:3000'], supports_credentials=True)
+CORS(user, origin=['http://localhost:3000'], supports_credentials=True)
+CORS(problem, origin=['http://localhost:3000'], supports_credentials=True)
 
-app.register_blueprint(dogs, url_prefix='/api/v1/dogs')
-app.register_blueprint(users, url_prefix='/api/v1/users')
-
+app.register_blueprint(mechanic, url_prefix='/api/v1/mechanic')
+app.register_blueprint(user, url_prefix='/api/v1/user')
+app.register_blueprint(mechanic, url_prefix='/api/v1/problem')
 
 
 @app.before_request
