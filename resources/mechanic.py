@@ -8,30 +8,30 @@ mechanic = Blueprint('mechanic', 'mechanic')
 
 # Index route
 @mechanic.route('/', methods=["GET"])
-@login_required
+# @login_required
 def get_all_mechanic():
     try:
         mechanic = [model_to_dict(mechanic) for mechanic in models.Mechanic.select().where(models.Mechanic.owner_id == current_user.id)]
         print(mechanic)
         for mechanic in mechanic:
             mechanic['owner'].pop('password')
-        return jsonify(data=dmechanic, status={"code": 200, "message": "Success"})
+        return jsonify(data=mechanic, status={"code": 200, "message": "Success"})
     except models.DoesNotExist:
         return jsonify(data={}, status={"code": 400, "message": "Error getting the resources"})
 
 # Create route
 @mechanic.route('/', methods=["POST"])
-@login_required
+# @login_required
 def create_mechanic():
     try:
         payload = request.get_json()
-        payload['owner'] = current_user.id
+        # payload['owner'] = current_user.id
         mechanic = models.Mechanic.create(**payload)
         print(mechanic.__dict__)
         # print(dir(mechanic))
         mechanic_dict = model_to_dict(mechanic)
 
-        return jsonify(data = dmechanic_dict, status = {"code": 201, "message": "Success"})
+        return jsonify(data = mechanic_dict, status = {"code": 200, "message": "Success"})
     except models.DoesNotExist:
         return jsonify(data={}, status={"code": 400, "message": "Error creating the resources"})
 
@@ -52,7 +52,7 @@ def update_mechanic(id):
     try:
         payload = request.get_json()
         # type subtitution property 'owner' of mechanic from dict to int
-        payload['owner'] = current_user.id
+        # payload['owner'] = current_user.id
 
         query = models.Mechanic.update(**payload).where(models.Mechanic.id == id)
         query.execute()
