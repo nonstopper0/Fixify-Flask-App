@@ -9,6 +9,7 @@ class Mechanic(UserMixin, Model):
     email = CharField(unique = True)
     password = CharField()
     location = CharField()
+    specialties = list
 
     class Meta:
         database = DATABASE
@@ -17,15 +18,17 @@ class User(Model):
     username = CharField(unique = True)
     email = CharField(unique = True)
     password = CharField()
+    location = CharField()
+    cars = list
 
     class Meta:
         database = DATABASE
 
 class Problem(Model):
-    make = CharField()
-    model = CharField()
+    car = CharField()
     price = CharField()
-    problem = CharField()
+    description = CharField()
+    location = CharField()
     owner = ForeignKeyField(Mechanic, backref ='problems')
     
     class Meta: 
