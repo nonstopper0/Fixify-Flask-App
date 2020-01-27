@@ -1,3 +1,4 @@
+
 import datetime
 from peewee import *
 from flask_login import UserMixin
@@ -40,3 +41,4 @@ def initialize():
     DATABASE.create_tables([User, Mechanic, Problem], safe=True)
     print('TABLES created')
     DATABASE.close()
+
