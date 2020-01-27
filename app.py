@@ -36,7 +36,7 @@ CORS(problem, origin=['http://localhost:3000'], supports_credentials=True)
 
 app.register_blueprint(mechanic, url_prefix='/api/v1/mechanic')
 app.register_blueprint(user, url_prefix='/api/v1/user')
-app.register_blueprint(mechanic, url_prefix='/api/v1/problem')
+app.register_blueprint(problem, url_prefix='/api/v1/problem')
 
 
 @app.before_request
