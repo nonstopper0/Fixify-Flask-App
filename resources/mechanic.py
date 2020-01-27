@@ -11,10 +11,10 @@ mechanic = Blueprint('mechanic', 'mechanic')
 # @login_required
 def get_all_mechanic():
     try:
-        mechanic = [model_to_dict(mechanic) for mechanic in models.Mechanic.select().where(models.Mechanic.owner_id == current_user.id)]
+        mechanic = [model_to_dict(mechanic) for mechanic in models.Mechanic.select()]
         print(mechanic)
         for mechanic in mechanic:
-            mechanic['owner'].pop('password')
+            mechanic.pop('password')
         return jsonify(data=mechanic, status={"code": 200, "message": "Success"})
     except models.DoesNotExist:
         return jsonify(data={}, status={"code": 400, "message": "Error getting the resources"})
@@ -25,6 +25,7 @@ def get_all_mechanic():
 def create_mechanic():
     try:
         payload = request.get_json()
+        print(payload)
         # payload['owner'] = current_user.id
         mechanic = models.Mechanic.create(**payload)
         print(mechanic.__dict__)
