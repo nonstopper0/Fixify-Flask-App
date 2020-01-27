@@ -1,6 +1,6 @@
-# import datetime
-# from peewee import *
-# from flask_login import UserMixin
+import datetime
+from peewee import *
+from flask_login import UserMixin
 
 DATABASE = PostgresqlDatabase('fixify_app')
 
@@ -17,7 +17,7 @@ class User(Model):
     username = CharField(unique = True)
     email = CharField(unique = True)
     password = CharField()
-    cars : [make = CharField(), model = CharField()]
+    cars = ARRAY(CharField)
 
     class Meta:
         database = DATABASE
@@ -29,10 +29,8 @@ class Problem(Model):
     problem = CharField()
     id = ForeignKeyField(Mechanic, backref ='problems')
     
-
     class Meta: 
         database = DATABASE
-
 
 def initialize():
     DATABASE.connect()
