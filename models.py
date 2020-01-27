@@ -17,8 +17,7 @@ class User(Model):
     username = CharField(unique = True)
     email = CharField(unique = True)
     password = CharField()
-    make = CharField()
-    model = CharField()
+    cars : [make = CharField(), model = CharField()]
 
     class Meta:
         database = DATABASE
