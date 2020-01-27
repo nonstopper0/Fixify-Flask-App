@@ -8,6 +8,7 @@ class Mechanic(UserMixin, Model):
     username = CharField(unique = True)
     email = CharField(unique = True)
     password = CharField()
+    location = CharField()
 
     class Meta:
         database = DATABASE
@@ -16,7 +17,7 @@ class User(Model):
     username = CharField(unique = True)
     email = CharField(unique = True)
     password = CharField()
-    
+    cars : [make = CharField(), model = CharField()]
 
     class Meta:
         database = DATABASE
@@ -25,6 +26,9 @@ class Problem(Model):
     make = CharField()
     model = CharField()
     price = CharField()
+    problem = CharField()
+    id = ForeignKeyField(Mechanic, backref ='problems')
+    
 
     class Meta: 
         database = DATABASE
