@@ -38,7 +38,7 @@ CORS(app, supports_credentials=True)
 
 app.register_blueprint(mechanic, url_prefix='/mechanic')
 app.register_blueprint(user, url_prefix='/user')
-app.register_blueprint(mechanic, url_prefix='/problem')
+app.register_blueprint(problem, url_prefix='/problem')
 
 
 @app.before_request
@@ -66,8 +66,8 @@ def register():
     try:
         if payload['type'] == 'user':
             print('user register')
-            del payload['type']
             print(payload)
+            del payload['type']
             user = models.User.create(**payload)
             login_user(user)
             user_dict = model_to_dict(user)
