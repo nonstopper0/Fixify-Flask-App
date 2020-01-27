@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, g, request
 from flask_login import LoginManager
 from flask_cors import CORS
+from flask_login import login_user, current_user, logout_user
 app = Flask(__name__)
 app.secret_key = 'thisisasecretkey'
 login_manager = LoginManager()
@@ -62,15 +63,24 @@ def login():
 @app.route('/register', methods=['POST'])
 def register():
     payload = request.get_json()
-    payload['email'].lower()
-    payload['username'].lower()
-    payload['type'].lower()
     try:
         if payload['type'] == 'user':
-            print('user')
+            print('user register')
+            del payload['type']
+            print(payload)
+            user = models.User.create(**payload)
+            login_user(user)
+            user_dict = model_to_dict(user)
+            del user_dict['password']
+            return jsonify(data = user_dict, status = {"code": 200, "message": "Successfully created an Account"})
         elif payload['type'] == 'mechanic':
-            print('mechanic')
-        return jsonify(data ={}, status = {"code": 200, "message": "Success"})
+            print('mechanic register')
+            mechanic = models.Mechanic.create(**payload)
+            login_user(mechanic)
+            mechanic_dict = model_to_dict(mechanic)
+            del mechanic_dict['password']
+            return jsonify(data = mechanic_dict, status = {"code": 200, "message": "Successfully created an Account"})
+    
     except:
         return jsonify(data={}, status={"code": 400, "message": "Error creating the resources"})
 
