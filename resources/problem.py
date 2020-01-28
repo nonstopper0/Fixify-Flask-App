@@ -23,7 +23,8 @@ def all_problems():
 def create_problem():
     try:
         payload = request.get_json()
-        payload['owner'] = current_user.id
+        payload['owner_username'] = models.User.username
+        payload['mechanic_username'] = models.Mechanic.username
         problem = models.Problem.create(**payload)
         problem_dict = model_to_dict(problem)
 

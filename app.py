@@ -3,12 +3,16 @@ from playhouse.shortcuts import model_to_dict
 from flask_login import LoginManager
 from flask_cors import CORS
 from flask_login import login_user, current_user, logout_user
+
 app = Flask(__name__)
+
 app.secret_key = 'thisisasecretkey'
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 
 import models
+
 from resources.mechanic import mechanic
 from resources.user import user
 from resources.problem import problem
