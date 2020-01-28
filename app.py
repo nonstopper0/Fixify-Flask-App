@@ -17,24 +17,6 @@ from resources.mechanic import mechanic
 from resources.user import user
 from resources.problem import problem
 
-# @login_manager.user_loader
-# def load_user(userid):
-#     try:
-#         return models.User.get(models.User.id == userid)
-#     except models.DoesNotExist:
-#         return None
-
-# @login_manager.unauthorized_handler
-# def unauthorized():
-#     return jsonify(
-#         data = {
-#             'error': 'User not logged in.'
-#         },
-#         status = {
-#             'code': 401,
-#             'message': 'You must be logged in to access that resource.'
-#         }
-#     )
 
 CORS(mechanic, origin=['http://localhost:3000'], supports_credentials=True)
 CORS(user, origin=['http://localhost:3000'], supports_credentials=True)
