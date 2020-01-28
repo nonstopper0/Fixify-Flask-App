@@ -70,6 +70,7 @@ def register():
             del payload['type']
             print(payload)
             user = models.User.create(**payload) 
+            idOfUser = user.id
             # the status code is what calls the loginfunc on react                
             return jsonify(data = {}, status = {'code': 200, 'message': "Successfully Registered", 'id': idOfUser})
     elif payload['type'] == 'mechanic':
@@ -81,9 +82,10 @@ def register():
             print('user register route')
             del payload['type']
             print(payload)
-            user = models.Mechanic.create(**payload)  
+            mechanic = models.Mechanic.create(**payload)  
+            idOfMechanic = mechanic.id
             # the status code is what calls the loginfunc on react               
-            return jsonify(data = {}, status = {'code': 200, 'message': "Successfully Registered", 'id': idOfUser})
+            return jsonify(data = {}, status = {'code': 200, 'message': "Successfully Registered", 'id': idOfMechanic})
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -108,13 +110,18 @@ def login():
             mechanicdict = model_to_dict(mechanic)
             if(mechanicdict['password'] == payload['password']):
                 del mechanicdict['password']
+                idOfMechanic = mechanicdict['id']
                 # the status code is what calls the loginfunc on react 
-                return jsonify(data = {}, status = {'code': 200, 'message': "Successfully logged in", 'id': idOfUser})
+                return jsonify(data = {}, status = {'code': 200, 'message': "Successfully logged in", 'id': idOfMechanic})
             else:
                 return jsonify(data={}, status = {'code': 400, 'message': 'Email or password is incorrect'})
         except models.DoesNotExist:
             return jsonify(data={}, status = {'code': 400, 'message': 'Email or password is incorrect'})
 
+@app.route('/logout', methods=['GET'])
+def logout():
+    logout_user
+    return jsonify(data={}, status={'code': 200, 'message': "Succesfully logged out"})
 
 DEBUG = True
 PORT = 8000
