@@ -14,7 +14,7 @@ class Mechanic(Model):
     class Meta:
         database = DATABASE
 
-class User(UserMixin, Model):
+class User(Model):
     username = CharField(unique = True)
     email = CharField(unique = True)
     password = CharField()
