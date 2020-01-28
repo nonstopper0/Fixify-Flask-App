@@ -70,6 +70,7 @@ def register():
             del payload['type']
             print(payload)
             user = models.User.create(**payload) 
+            idOfUser = user.id
             # the status code is what calls the loginfunc on react                
             return jsonify(data = {}, status = {'code': 200, 'message': "Successfully Registered", 'id': idOfUser})
     elif payload['type'] == 'mechanic':
@@ -82,6 +83,7 @@ def register():
             del payload['type']
             print(payload)
             user = models.Mechanic.create(**payload)  
+            idOfUser = user.id
             # the status code is what calls the loginfunc on react               
             return jsonify(data = {}, status = {'code': 200, 'message': "Successfully Registered", 'id': idOfUser})
 
@@ -115,6 +117,10 @@ def login():
         except models.DoesNotExist:
             return jsonify(data={}, status = {'code': 400, 'message': 'Email or password is incorrect'})
 
+@app.route('/logout', methods=['GET'])
+def logout():
+    logout_user
+    return jsonify(data={}, status={'code': 200, 'message': "Succesfully logged out"})
 
 DEBUG = True
 PORT = 8000

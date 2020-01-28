@@ -5,7 +5,7 @@ from flask_login import UserMixin
 
 DATABASE = PostgresqlDatabase('fixify_app')
 
-class Mechanic(UserMixin, Model):
+class Mechanic(Model):
     username = CharField(unique = True)
     email = CharField(unique = True)
     password = CharField()
@@ -14,7 +14,7 @@ class Mechanic(UserMixin, Model):
     class Meta:
         database = DATABASE
 
-class User(Model):
+class User(UserMixin, Model):
     username = CharField(unique = True)
     email = CharField(unique = True)
     password = CharField()
