@@ -7,8 +7,8 @@ import models
 user = Blueprint('user', 'user')
 
 
-@user.route('/', methods=["GET"])
-def get_one_user():
+@user.route('/<id>', methods=["GET"])
+def get_one_user(id):
     try:
         user = models.User.get_by_id(id)
         user_dict = model_to_dict(user)
