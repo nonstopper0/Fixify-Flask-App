@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from playhouse.shortcuts import model_to_dict
-from flask_login import current_user, login_required
+# from flask_login import current_user, login_required
 
 import models
 
@@ -10,10 +10,8 @@ problem = Blueprint('problem', 'problem')
 @problem.route('/', methods=["GET"])
 def all_problems():
     try:
-        problem = [model_to_dict(problem) for problem in models.Problem.select().where(models.Problem.owner_id == current_user.id)]
+        problem = [model_to_dict(problem) for problem in models.Problem.select()]
         print(problem)
-        for problem in problem:
-            problem['owner'].pop('password')
         return jsonify(data = problem, status={"code": 200, "message": "Got the problems"})
     except models.DoesNotExist:
         return jsonify(data = {}, status={"code": 400, "message": "Error getting the problems"})
@@ -23,8 +21,8 @@ def all_problems():
 def create_problem():
     try:
         payload = request.get_json()
-        payload['owner_username'] = models.User.username
-        payload['mechanic_username'] = models.Mechanic.username
+        # payload['owner_username'] = models.User.username
+        # payload['mechanic_username'] = models.Mechanic.username
         problem = models.Problem.create(**payload)
         problem_dict = model_to_dict(problem)
 
@@ -60,6 +58,11 @@ def delete_problem(id):
     try:
         query = models.Problem.delete().where(models.Problem.id == id)
         query.execute()
-        return jsonify(data = "Problem succesfully deleted", status={"code": 200, "message": "Problem successfully deleted"})
+        if models.Problem.owner_username == models.User.username:
+            models.User.delete()
+            models.Problem.delete()
+            return jsonify(data = "Problem and User successfully deleted", status = {"code": 200, "message": "Group delete success"})
+        else:
+            return jsonify(data = "Problem succesfully deleted", status={"code": 200, "message": "Problem successfully deleted"})
     except models.DoesNotExist:
         return jsonify(data = {}, status={"code": 400, "message": "Failed to delete"})

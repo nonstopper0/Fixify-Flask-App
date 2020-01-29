@@ -35,7 +35,7 @@ def update_user(id):
 def user_delete(id):
     try:
         query = models.User.delete().where(models.User.id == id)
-        query.execute()
+        query.execute()    
         return jsonify(data = "User successfully deleted", status = {"code": 200, "message": "User successfully deleted"})
     except models.DoesNotExist:
         return jsonify(data = {}, status = {"code": 400, "message": "Failed to delete the user from the database"})
