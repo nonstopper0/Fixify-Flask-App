@@ -49,7 +49,9 @@ def update_mechanic(id):
 def delete_mechanic(id):
     try:
         query = models.Mechanic.delete().where(models.Mechanic.id == id)
+        mechanic_delete = models.Problem.mechanic_username
+        del mechanic_delete
         query.execute()
         return jsonify(data='Resource successfully deleted', status={"code": 200, "message": "Mechanic successfully deleted"})
     except models.DoesNotExist:
-        return jsonify(data={}, status={"code": 400, "message": "Error deleting the mechanic from the database"})        
+        return jsonify(data={}, status={"code": 400, "message": "Error deleting the mechanic from the database"})
