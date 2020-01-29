@@ -23,12 +23,10 @@ def all_problems():
 def create_problem():
     try:
         payload = request.get_json()
-        payload['owner_username'] = models.User.username
-        payload['mechanic_username'] = models.Mechanic.username
         problem = models.Problem.create(**payload)
         problem_dict = model_to_dict(problem)
 
-        return jsonify(data = problem_dict, status = {"code": 200, "message": "Problem added"})
+        return jsonify(data = {}, status = {"code": 200, "message": "Problem added"})
     except models.DoesNotExist:
         return jsonify(data={}, status={"code": 400, "message": "Error creating the problem"})
 
