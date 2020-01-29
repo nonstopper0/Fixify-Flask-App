@@ -6,14 +6,13 @@ import models
 
 problem = Blueprint('problem', 'problem')
 
+
+
 # Index route
 @problem.route('/', methods=["GET"])
 def all_problems():
     try:
-        problem = [model_to_dict(problem) for problem in models.Problem.select().where(models.Problem.owner_id == current_user.id)]
-        print(problem)
-        for problem in problem:
-            problem['owner'].pop('password')
+        problem = [model_to_dict(problem) for problem in models.Problem.select()]
         return jsonify(data = problem, status={"code": 200, "message": "Got the problems"})
     except models.DoesNotExist:
         return jsonify(data = {}, status={"code": 400, "message": "Error getting the problems"})
@@ -61,3 +60,4 @@ def delete_problem(id):
         return jsonify(data = "Problem succesfully deleted", status={"code": 200, "message": "Problem successfully deleted"})
     except models.DoesNotExist:
         return jsonify(data = {}, status={"code": 400, "message": "Failed to delete"})
+        
