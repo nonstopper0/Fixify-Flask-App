@@ -25,6 +25,7 @@ def update_user(id):
         query = models.User.update(**payload).where(models.User.id == id)
         query.execute()
         updated_user = model_to_dict(models.User.get_by_id(id))
+        del updated_user['password']
         return jsonify(data = updated_user, status = {"code": 200, "message": "Succesfully updated user"})
     except models.DoesNotExist:
         return jsonify(data = {}, status = {"code": 400, "message": "User update failed"})

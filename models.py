@@ -9,6 +9,7 @@ class Mechanic(Model):
     email = CharField(unique = True)
     password = CharField()
     location = CharField()
+    specialities = CharField()
 
     class Meta:
         database = DATABASE
