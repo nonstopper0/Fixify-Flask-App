@@ -18,9 +18,9 @@ from resources.user import user
 from resources.problem import problem
 
 
-CORS(mechanic, origin=['http://localhost:3000'], supports_credentials=True)
-CORS(user, origin=['http://localhost:3000'], supports_credentials=True)
-CORS(problem, origin=['http://localhost:3000'], supports_credentials=True)
+CORS(mechanic, origin=['http://localhost:3000/mechanic'], supports_credentials=True)
+CORS(user, origin=['http://localhost:3000/user'], supports_credentials=True)
+CORS(problem, origin=['http://localhost:3000/problem'], supports_credentials=True)
 CORS(app, supports_credentials=True)
 
 app.register_blueprint(mechanic, url_prefix='/mechanic')
