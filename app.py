@@ -3,14 +3,8 @@ from playhouse.shortcuts import model_to_dict
 from flask_login import LoginManager
 from flask_cors import CORS
 from flask_login import login_user, current_user, logout_user
-
-# At the top
 import os
 
-# Just above "if __name__ == '__main__':"
-if 'ON_HEROKU' in os.environ:
-    print('hitting ')
-    models.initialize()
 
 app = Flask(__name__)
 
@@ -119,6 +113,9 @@ def logout():
 
 DEBUG = True
 PORT = 8000
+if 'ON_HEROKU' in os.environ:
+    print('hitting ')
+    models.initialize()
 if __name__ == '__main__':
     models.initialize()
     app.run(debug=DEBUG, port=PORT)
