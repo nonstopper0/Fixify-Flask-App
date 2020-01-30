@@ -60,4 +60,4 @@ def delete_problem(id):
         return jsonify(data = "Problem succesfully deleted", status={"code": 200, "message": "Problem successfully deleted"})
     except models.DoesNotExist:
         return jsonify(data = {}, status={"code": 400, "message": "Failed to delete"})
-        
+

@@ -3,6 +3,8 @@ from playhouse.shortcuts import model_to_dict
 from flask_login import LoginManager
 from flask_cors import CORS
 from flask_login import login_user, current_user, logout_user
+import os
+
 
 app = Flask(__name__)
 
@@ -18,9 +20,9 @@ from resources.user import user
 from resources.problem import problem
 
 
-CORS(mechanic, origin=['http://localhost:3000/mechanic'], supports_credentials=True)
-CORS(user, origin=['http://localhost:3000/user'], supports_credentials=True)
-CORS(problem, origin=['http://localhost:3000/problem'], supports_credentials=True)
+CORS(mechanic, origin=['http://localhost:3000/mechanic', 'https://fixify-react-app.herokuapp.com/mechanic'], supports_credentials=True)
+CORS(user, origin=['http://localhost:3000/user', 'https://fixify-react-app.herokuapp.com/user'], supports_credentials=True)
+CORS(problem, origin=['http://localhost:3000/problem', 'https://fixify-react-app.herokuapp.com//problem'], supports_credentials=True)
 CORS(app, supports_credentials=True)
 
 app.register_blueprint(mechanic, url_prefix='/mechanic')
@@ -111,6 +113,9 @@ def logout():
 
 DEBUG = True
 PORT = 8000
+if 'ON_HEROKU' in os.environ:
+    print('hitting ')
+    models.initialize()
 if __name__ == '__main__':
     models.initialize()
     app.run(debug=DEBUG, port=PORT)
