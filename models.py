@@ -1,8 +1,14 @@
 import datetime
 from peewee import *
+import os
+from playhouse.db_url import connect
 
+# Replace your DATABASE definition with this block
+if 'ON_HEROKU' in os.environ:
+    DATABASE = connect(os.environ.get('DATABASE_URL'))
+else:
+    DATABASE = PostgresqlDatabase('fixify_app')
 
-DATABASE = PostgresqlDatabase('fixify_app')
 
 class Mechanic(Model):
     username = CharField(unique = True)
