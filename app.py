@@ -22,9 +22,9 @@ from resources.problem import problem
 
 CORS(mechanic, origin=['http://localhost:3000/mechanic', 'https://fixify-react-app.herokuapp.com/mechanic'], supports_credentials=True)
 CORS(user, origin=['http://localhost:3000/user', 'https://fixify-react-app.herokuapp.com/user'], supports_credentials=True)
-CORS(problem, origin=['http://localhost:3000/problem', 'https://fixify-react-app.herokuapp.com//problem'], supports_credentials=True)
+CORS(problem, origin=['http://localhost:3000/problem', 'https://fixify-react-app.herokuapp.com/problem'], supports_credentials=True)
 CORS(app, supports_credentials=True)
-
+CORS(app, origin=['http://localhost:3000/problem', 'https://fixify-react-app.herokuapp.com'], supports_credentials=True)
 app.register_blueprint(mechanic, url_prefix='/mechanic')
 app.register_blueprint(user, url_prefix='/user')
 app.register_blueprint(problem, url_prefix='/problem')
